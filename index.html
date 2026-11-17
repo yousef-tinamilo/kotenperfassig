@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>横浜下剋上 ― 漢詩</title>
+<meta name="description" content="横浜DeNAベイスターズをテーマにした七言絶句の紹介サイト。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500&family=Noto+Serif+JP:wght@400;500&family=Montserrat:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F7F7F5;
+  --ink:#1A1C1E;
+  --sub:#7C7F84;
+  --line:#E3E3DF;
+  --accent:#0B4EA2;
+  --sans:"Noto Sans JP",system-ui,sans-serif;
+  --serif:"Noto Serif JP","Hiragino Mincho ProN",serif;
+  --mono:"Montserrat",ui-monospace,monospace;
+  --gutter:clamp(24px,6vw,96px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.9;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding:0 var(--gutter)}
+.label{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--sub);text-transform:uppercase}
+.label b{color:var(--accent);font-weight:400}
+
+/* progress */
+.progress{position:fixed;left:0;top:0;width:10px;height:100vh;background:transparent;z-index:10}
+.progress i{display:block;width:100%;height:100%;background:var(--accent);transform-origin:top;transform:scaleY(0)}
+
+/* hero */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:space-between;padding:12vh 0 8vh;background:var(--bg) url("bg67.png") center / cover no-repeat}
+.hero,.hero .label,.hero .sub{color:#fff}
+.hero .scroll i{background:rgba(255,255,255,.35)}
+.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(56px,11vw,144px);line-height:1.15;letter-spacing:.08em;margin:12vh 0 0}
+.hero h1 span{color:var(--accent)}
+.hero .sub{margin-top:32px;font-size:15px;color:var(--sub);letter-spacing:.08em}
+.scroll{display:flex;align-items:center;gap:16px}
+.scroll i{display:block;width:1px;height:64px;background:var(--line);position:relative;overflow:hidden}
+.scroll i::after{content:"";position:absolute;inset:0;background:var(--accent);animation:drop 2.4s cubic-bezier(.6,0,.2,1) infinite}
+@keyframes drop{0%{transform:translateY(-100%)}60%,100%{transform:translateY(100%)}}
+
+/* sections */
+section{border-top:1px solid var(--line)}
+.pad{padding:clamp(96px,16vh,200px) 0}
+
+/* poem */
+.poem{display:block}
+.poem-v{font-family:var(--serif);display:flex;flex-direction:column;align-items:flex-start;gap:clamp(20px,3.6vw,44px)}
+.poem-v p{white-space:nowrap;font-size:min(64px,calc((100vw - 2 * var(--gutter)) / 8.6));letter-spacing:.14em;line-height:1.3;opacity:0;transform:translateY(12px);filter:blur(4px);transition:opacity 1.2s ease,transform 1.2s ease,filter 1.2s ease}
+.poem-v p.in{opacity:1;transform:none;filter:none}
+.poem-v p:nth-child(2){transition-delay:.15s}.poem-v p:nth-child(3){transition-delay:.3s}.poem-v p:nth-child(4){transition-delay:.45s}
+.poem-head{margin-bottom:64px}
+.poem-head h2{font-size:clamp(24px,3vw,32px);font-weight:400;margin-top:12px}
+.yomi{margin-top:72px;display:grid;grid-template-columns:repeat(2,1fr);gap:20px 48px;font-size:13px;color:var(--sub);border-top:1px solid var(--line);padding-top:32px}
+.yomi span{display:block}
+
+/* line by line */
+.steps{height:520vh;position:relative}
+.stage{position:sticky;top:0;height:100svh;display:grid;grid-template-columns:1fr 1fr;gap:var(--gutter);align-items:center;max-width:1120px;margin:0 auto;padding:0 var(--gutter)}
+.big{--bh:min(70svh,560px);position:relative;height:var(--bh);display:flex;justify-content:flex-start}
+.big p{position:absolute;inset:0;writing-mode:vertical-rl;white-space:nowrap;font-family:var(--serif);font-size:min(7vw,calc(var(--bh) / 8.6));letter-spacing:.14em;opacity:0;transition:opacity .8s ease,transform .8s ease;transform:translateY(10px)}
+.big p.on{opacity:1;transform:none}
+.big p em{font-style:normal;color:var(--accent)}
+.note{position:relative;min-height:320px}
+.note article{position:absolute;inset:auto 0 auto 0;top:50%;transform:translateY(calc(-50% + 10px));opacity:0;transition:opacity .8s ease,transform .8s ease}
+.note article.on{opacity:1;transform:translateY(-50%)}
+.note h3{font-size:clamp(22px,2.4vw,28px);font-weight:400;margin:12px 0 20px}
+.note dl{border-top:1px solid var(--line)}
+.note dl div{display:grid;grid-template-columns:5em 1fr;gap:16px;padding:14px 0;border-bottom:1px solid var(--line);font-size:14px}
+.note dt{color:var(--sub);font-family:var(--mono);font-size:12px;letter-spacing:.1em;padding-top:2px}
+.star{display:inline-block;color:var(--accent);opacity:0;transition:opacity 1.2s ease .4s}
+.note article.on .star{opacity:1}
+
+/* theme */
+.theme-grid{display:grid;grid-template-columns:1fr 2fr;gap:var(--gutter)}
+.theme h2{font-size:clamp(28px,4.4vw,52px);font-weight:400;line-height:1.5;letter-spacing:.02em}
+.theme h2 span{color:var(--accent)}
+.theme p{max-width:34em;color:#44474B;margin-top:32px}
+
+/* craft */
+.craft h2{font-size:clamp(24px,3vw,32px);font-weight:400;margin:12px 0 64px}
+.craft ol{list-style:none;border-top:1px solid var(--line)}
+.craft li{display:grid;grid-template-columns:96px 1fr 2fr;gap:24px;padding:36px 0;border-bottom:1px solid var(--line)}
+.craft li .n{font-family:var(--mono);font-size:13px;color:var(--accent);padding-top:6px}
+.craft li h3{font-size:18px;font-weight:400}
+.craft li p{color:#44474B;font-size:15px}
+
+footer{border-top:1px solid var(--line);padding:48px 0 64px;font-size:12px;color:var(--sub);display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(16px);transition:opacity .9s ease,transform .9s ease}
+.rv.in{opacity:1;transform:none}
+
+@media (max-width:760px){
+  .hero{padding-top:10vh}
+  .yomi{grid-template-columns:1fr}
+  .stage{grid-template-columns:1fr;grid-template-rows:42% 48%;gap:16px;align-content:center}
+  .big{--bh:42svh;height:var(--bh);justify-content:center}
+  .big p{inset:0;margin:0 auto;width:max-content}
+  .note{min-height:0}
+  .theme-grid{grid-template-columns:1fr;gap:32px}
+  .craft li{grid-template-columns:1fr;gap:8px;padding:28px 0}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+  .poem-v p,.rv{opacity:1;transform:none;filter:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<div class="progress" aria-hidden="true"><i id="bar"></i></div>
+
+<header class="hero">
+  <div class="wrap"><span class="label">古典探究 &nbsp;/&nbsp; 2学期パフォーマンス課題</span></div>
+  <div class="wrap">
+    <h1>横浜<span>下剋上</span></h1>
+    <p class="sub">2年1組22番　サリブユーセフ</p>
+  </div>
+  <div class="wrap"><div class="scroll"><i></i><span class="label">Scroll</span></div></div>
+</header>
+
+<section id="poem">
+  <div class="wrap pad">
+    <div class="poem-head rv">
+      <span class="label"><b>01</b> &nbsp;Poem</span>
+      <h2>「横浜下剋上」</h2>
+    </div>
+    <div class="poem">
+      <div class="poem-v" lang="zh-Hant-JP" aria-label="漢詩全文">
+        <p>吹浜風中新宿願</p>
+        <p>因星果敢福岡倒</p>
+        <p>蒼穹不絶翻星旗</p>
+        <p>克復黄鷹下剋上</p>
+      </div>
+    </div>
+    <div class="yomi rv">
+      <span>はまかぜふくなか しゅくがんあらたなり</span>
+      <span>ほしのかかんによりて ふくおかたおる</span>
+      <span>そうきゅうたえず せいきをひるがえし</span>
+      <span>ホークスをこくふくす げこくじょう</span>
+    </div>
+  </div>
+</section>
+
+<section id="lines">
+  <div class="steps" id="steps">
+    <div class="stage">
+      <div class="big" aria-hidden="true">
+        <p class="on">吹浜風中新宿願</p>
+        <p>因<em>星</em>果敢福岡倒</p>
+        <p>蒼穹不絶翻<em>星</em>旗</p>
+        <p>克復黄鷹下剋上</p>
+      </div>
+      <div class="note">
+        <article class="on">
+          <span class="label"><b>起</b> &nbsp;Line 1 / 4</span>
+          <h3>はまかぜふくなか しゅくがんあらたなり</h3>
+          <dl>
+            <div><dt>意味</dt><dd>横浜に吹く潮風の中で、長年の願いが新しく燃え上がる。</dd></div>
+            <div><dt>語の選択</dt><dd>「吹浜」で港町・横浜の空気を表した。「宿願」は積み重ねた年月の重みを含む語として選んだ。</dd></div>
+          </dl>
+        </article>
+        <article>
+          <span class="label"><b>承</b> &nbsp;Line 2 / 4</span>
+          <h3>ほしのかかんによりて ふくおかたおる</h3>
+          <dl>
+            <div><dt>意味</dt><dd>レギュラーシーズン三位という立場から、果敢に星(ベイスターズ)が戦うことで、福岡があっけなく倒れる</dd></div>
+            <div><dt>語の選択</dt><dd>「星」でベイスターズを表現。「勝つ」より相手の強さを前提にした動詞を選んだ。この部分は先生とも相談を重ねてこだわって語を選び出しました</dd></div>
+          </dl>
+        </article>
+        <article>
+          <span class="label"><b>転</b> &nbsp;Line 3 / 4</span>
+          <h3>そうきゅうたえず せいきをひるがえし<h3>
+          <dl>
+            <div><dt>意味</dt><dd>青い空の下、絶えることなく星の旗がはためく。視点を球場の空へ広げる句。</dd></div>
+            <div><dt>語の選択</dt><dd>「星旗」はベイスターズ（星）の旗を指す。「蒼穹」でチームカラーの青を表現した。</dd></div>
+          </dl>
+        </article>
+        <article>
+          <span class="label"><b>結</b> &nbsp;Line 4 / 4</span>
+          <h3>ホークスをこくふくす げこくじょう</h3>
+          <dl>
+            <div><dt>意味</dt><dd>ホークスに打ち勝ち、下位の者が上位を倒す下剋上を果たす。</dd></div>
+            <div><dt>語の選択</dt><dd>「黄鷹」でホークスのことを表現。末尾に「下剋上」を置き、詩全体のテーマを言い切って閉じた。</dd></div>
+          </dl>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="theme" class="theme">
+  <div class="wrap pad">
+    <div class="theme-grid">
+      <div class="rv"><span class="label"><b>02</b> &nbsp;Theme</span></div>
+      <div class="rv">
+        <h2>三位から頂点へ。<br>その物語を<span>漢詩</span>に。</h2>
+        <p>テーマは横浜DeNAベイスターズの「下剋上」です。この漢詩を作った時点では、私の推しプロ野球チームであるベイスターズが、3位から2年ぶりの日本シリーズ進出を決めました。宿敵であり、強敵である福岡ソフトバンクホークスを倒す意思を漢詩に表しました。(結局、ベイスターズは0勝4連敗で日本一を逃しますが、ここでは考えないものとします。)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="craft" class="craft">
+  <div class="wrap pad">
+    <div class="rv">
+      <span class="label"><b>03</b> &nbsp;Craft</span>
+      <h2>制作の工夫</h2>
+    </div>
+    <ol>
+      <li class="rv"><span class="n">03a</span><h3>形式</h3><p>七言絶句（七字×四句）で、起承転結の構成にした。第一句から順に「願い→勝利→空と旗→結論」と展開させている。</p></li>
+      <li class="rv"><span class="n">03b</span><h3>対句</h3><p>この漢詩は七言絶句のため、対句はない。</p></li>
+      <li class="rv"><span class="n">03c</span><h3>押韻</h3><p>偶数句末の「倒 - とう」と「上 - じょう」が押韻している。</p></li>
+      <li class="rv"><span class="n">03d</span><h3>文字の選択</h3><p>地名は「福岡」をそのまま、チーム名は「星旗」「黄鷹」と色や象徴に置き換えた。結句末は「下剋上」の三字で詩の主題を言い切った。</p></li>
+    </ol>
+  </div>
+</section>
+
+
+<script>
+(function(){
+  var bar=document.getElementById('bar');
+  var steps=document.getElementById('steps');
+  var bigs=[].slice.call(document.querySelectorAll('.big p'));
+  var notes=[].slice.call(document.querySelectorAll('.note article'));
+  var cur=-1;
+  function set(i){
+    if(i===cur)return;cur=i;
+    bigs.forEach(function(e,k){e.classList.toggle('on',k===i)});
+    notes.forEach(function(e,k){e.classList.toggle('on',k===i)});
+  }
+  function tick(){
+    var h=document.documentElement;
+    var p=h.scrollTop/(h.scrollHeight-h.clientHeight||1);
+    bar.style.transform='scaleY('+Math.min(1,Math.max(0,p))+')';
+    var r=steps.getBoundingClientRect();
+    var total=r.height-window.innerHeight;
+    var q=Math.min(.999,Math.max(0,-r.top/total));
+    set(Math.floor(q*4));
+  }
+  var raf=false;
+  window.addEventListener('scroll',function(){
+    if(raf)return;raf=true;
+    requestAnimationFrame(function(){tick();raf=false});
+  },{passive:true});
+  window.addEventListener('resize',tick);
+  tick();
+
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+  },{threshold:.2});
+  document.querySelectorAll('.rv,.poem-v p').forEach(function(e){io.observe(e)});
+})();
+</script>
+</body>
+</html>
